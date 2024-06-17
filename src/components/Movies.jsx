@@ -5,30 +5,34 @@ import axios from "axios";
 import Pagination from "./Pagination";
 import WatchList from "./WatchList";
 
-function Movies({handleAddtoWatchlist,handleRemoveFromWatchlist,watchlist}) {
+function Movies({
+  handleAddtoWatchlist,
+  handleRemoveFromWatchlist,
+  watchlist,
+}) {
   const [movies, setMovies] = useState([]);
-  const [pageNo,setPageNo]=useState(1);
+  const [pageNo, setPageNo] = useState(1);
 
-  const handlePrev = ()=>{
-    if(pageNo==1)
-      {
-        setPageNo(1);
-      }
-     else
-      setPageNo(pageNo-1);
-  }
-  const handleNext =()=>{
-    setPageNo(pageNo+1);
-  }
+  const handlePrev = () => {
+    if (pageNo == 1) {
+      setPageNo(1);
+    } else setPageNo(pageNo - 1);
+  };
+  const handleNext = () => {
+    setPageNo(pageNo + 1);
+  };
 
   useEffect(() => {
     axios
       .get(
         `https://api.themoviedb.org/3/movie/popular?api_key=d1b700fcacea8264d93047da45c5ec02&language=en-US&page=${pageNo}`
       )
-      .then(function (res) {
-        setMovies(res.data.results);
-      }, [pageNo]);
+      .then(
+        function (res) {
+          setMovies(res.data.results);
+        },
+        [pageNo]
+      );
   });
 
   return (
@@ -39,8 +43,9 @@ function Movies({handleAddtoWatchlist,handleRemoveFromWatchlist,watchlist}) {
       <div className="flex flex-row flex-wrap justify-around gap-8 ">
         {movies.map((movieObj) => {
           return (
-            <MovieCard key={movieObj.id}
-            movieObj={movieObj}
+            <MovieCard
+              key={movieObj.id}
+              movieObj={movieObj}
               poster_path={movieObj.poster_path}
               movie_name={movieObj.title}
               handleAddtoWatchlist={handleAddtoWatchlist}
@@ -50,7 +55,11 @@ function Movies({handleAddtoWatchlist,handleRemoveFromWatchlist,watchlist}) {
           );
         })}
       </div>
-      <Pagination pageNo={pageNo} handleNext={handleNext} handlePrev={handlePrev}/>
+      <Pagination
+        pageNo={pageNo}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
+      />
     </div>
   );
 }

@@ -27,7 +27,10 @@ function MovieCard({
         }}
       >
         {doesContain(movieObj) ? (
-          <div onClick={()=>handleRemoveFromWatchlist(movieObj)} className="m-4 flex jsutify-center h-8 w-8 items-center rounded-lg">
+          <div
+            onClick={() => handleRemoveFromWatchlist(movieObj)}
+            className="m-4 flex jsutify-center h-8 w-8 items-center rounded-lg"
+          >
             &#10060;
           </div>
         ) : (
